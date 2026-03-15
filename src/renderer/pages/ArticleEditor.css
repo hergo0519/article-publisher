@@ -1,0 +1,267 @@
+.article-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  background: white;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.editor-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.editor-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.editor-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px;
+  overflow: auto;
+}
+
+.title-input {
+  width: 100%;
+  font-size: 28px;
+  font-weight: 600;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 12px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.title-input:focus {
+  outline: none;
+  border-bottom-color: var(--primary-color);
+}
+
+.title-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.editor-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tab {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+}
+
+.tab.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+.content-editor {
+  flex: 1;
+  width: 100%;
+  min-height: 400px;
+  padding: 20px;
+  font-size: 16px;
+  line-height: 1.8;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  resize: none;
+  font-family: inherit;
+}
+
+.content-editor:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.content-preview {
+  flex: 1;
+  padding: 20px;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: auto;
+  line-height: 1.8;
+}
+
+.editor-sidebar {
+  width: 320px;
+  background: white;
+  border-left: 1px solid var(--border-color);
+  overflow: auto;
+  padding: 24px;
+}
+
+.sidebar-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.platform-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.platform-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.platform-item:hover:not(.disabled) {
+  background: var(--bg-tertiary);
+}
+
+.platform-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.platform-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.platform-name {
+  flex: 1;
+  font-size: 14px;
+}
+
+.platform-hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.cover-upload {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.cover-placeholder {
+  width: 100%;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cover-placeholder:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.cover-preview {
+  position: relative;
+}
+
+.cover-preview img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.cover-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.2s;
+}
+
+.cover-remove:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* 定时发布弹窗 */
+.schedule-modal {
+  width: 480px;
+}
+
+.selected-platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  min-height: 40px;
+}
+
+.platform-tag {
+  font-size: 13px;
+  padding: 4px 12px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 12px;
+}
+
+input[type="datetime-local"] {
+  font-family: inherit;
+}

@@ -1,0 +1,243 @@
+.about-page {
+  height: 100%;
+  overflow: auto;
+  padding: 40px;
+  background: var(--bg-secondary);
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.app-logo {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1890ff 0%, #36cfc9 100%);
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(24, 144, 255, 0.25);
+}
+
+.app-logo svg {
+  stroke: white;
+}
+
+.app-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.app-version {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin-bottom: 32px;
+}
+
+.company-section {
+  margin-bottom: 40px;
+  padding: 24px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+.company-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.company-website {
+  font-size: 14px;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.company-website:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* 公司介绍 */
+.company-intro {
+  margin-bottom: 40px;
+  padding: 32px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.company-intro h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  text-align: center;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.company-intro h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 24px 0 12px;
+}
+
+.intro-content p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.intro-highlight {
+  font-size: 16px !important;
+  color: var(--text-primary) !important;
+  background: linear-gradient(135deg, #e6f7ff 0%, #f0f5ff 100%);
+  padding: 20px;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--primary-color);
+}
+
+.tech-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+
+.tech-list li {
+  padding: 10px 0;
+  padding-left: 24px;
+  position: relative;
+  font-size: 14px;
+  color: var(--text-secondary);
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.tech-list li:last-child {
+  border-bottom: none;
+}
+
+.tech-list li::before {
+  content: "•";
+  color: var(--primary-color);
+  font-weight: bold;
+  position: absolute;
+  left: 8px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.tech-list li strong {
+  color: var(--text-primary);
+}
+
+.business-list {
+  padding-left: 20px;
+  margin: 16px 0;
+}
+
+.business-list li {
+  padding: 12px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.business-list li strong {
+  color: var(--text-primary);
+}
+
+.vision {
+  font-size: 16px !important;
+  color: var(--primary-color) !important;
+  font-weight: 500;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #f6ffed 0%, #e6f7ff 100%);
+  border-radius: var(--radius-md);
+  margin-top: 24px;
+}
+
+/* 二维码 */
+.qr-section {
+  margin-bottom: 40px;
+  padding: 32px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+.qr-section h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.qr-codes {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-bottom: 20px;
+}
+
+.qr-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.qr-placeholder {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  background: white;
+  overflow: hidden;
+}
+
+.qr-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.qr-item span {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.qr-hint {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-top: 8px;
+}
+
+.copyright {
+  padding-top: 32px;
+  border-top: 1px solid var(--border-color);
+}
+
+.copyright p {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin: 4px 0;
+}
