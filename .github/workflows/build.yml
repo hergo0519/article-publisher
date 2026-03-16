@@ -13,6 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         include:
@@ -40,37 +41,39 @@ jobs:
       run: npm run build
 
     - name: Build and package (${{ matrix.platform }})
-      run: npm run dist:${{ matrix.platform }}
+      run: npx electron-builder --${{ matrix.platform }}
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ELECTRON_BUILDER_BINARIES_MIRROR: https://npmmirror.com/mirrors/electron-builder-binaries/
 
     - name: Upload artifacts (Windows)
-      if: matrix.platform == 'win'
+      if: matrix.platform == 'win' && !cancelled()
       uses: actions/upload-artifact@v4
       with:
         name: windows-build
         path: |
           release/*.exe
-          release/*.zip
+        if-no-files-found: ignore
 
     - name: Upload artifacts (macOS)
-      if: matrix.platform == 'mac'
+      if: matrix.platform == 'mac' && !cancelled()
       uses: actions/upload-artifact@v4
       with:
         name: macos-build
         path: |
           release/*.dmg
           release/*.zip
+        if-no-files-found: ignore
 
     - name: Upload artifacts (Linux)
-      if: matrix.platform == 'linux'
+      if: matrix.platform == 'linux' && !cancelled()
       uses: actions/upload-artifact@v4
       with:
         name: linux-build
         path: |
           release/*.AppImage
           release/*.deb
+        if-no-files-found: ignore
 
   release:
     needs: build
@@ -92,5 +95,6 @@ jobs:
           artifacts/linux-build/*
         draft: false
         prerelease: false
+        generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
