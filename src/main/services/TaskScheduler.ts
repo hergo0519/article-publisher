@@ -136,4 +136,9 @@ export class TaskScheduler {
       this.checkInterval = null
     }
   }
+
+  destroy(): void {
+    this.stop()
+    this.tasks = []
+  }
 }
