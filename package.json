@@ -8,13 +8,19 @@
   "scripts": {
     "dev": "npm run build:main && electron .",
     "dev:renderer": "vite",
-    "build": "npm run build:main && npm run build:renderer",
+    "build": "npm run clean && npm run build:main && npm run build:renderer",
     "build:main": "tsc -p tsconfig.main.json",
     "build:renderer": "vite build",
+    "clean": "rimraf dist",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "type-check": "tsc --noEmit",
     "dist": "npm run build && electron-builder",
     "dist:win": "npm run build && electron-builder --win",
     "dist:mac": "npm run build && electron-builder --mac",
-    "dist:linux": "npm run build && electron-builder --linux"
+    "dist:linux": "npm run build && electron-builder --linux",
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "axios": "^1.6.0",
@@ -26,15 +32,20 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/multer": "^1.4.11",
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-react": "^4.2.1",
-    "concurrently": "^8.2.2",
     "electron": "^28.0.0",
     "electron-builder": "^24.9.1",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.1.1",
+    "rimraf": "^5.0.5",
     "typescript": "^5.3.3",
     "vite": "^5.0.8"
   },
@@ -43,7 +54,8 @@
     "productName": "文章多平台发布助手",
     "copyright": "Copyright © 2024 合果科技 www.hergo.com.cn",
     "directories": {
-      "output": "release"
+      "output": "release",
+      "buildResources": "assets"
     },
     "electronDownload": {
       "mirror": "https://npmmirror.com/mirrors/electron/"
@@ -51,26 +63,41 @@
     "files": [
       "dist/**/*",
       "assets/**/*",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "!node_modules/**/*.map",
+      "!node_modules/**/docs/**/*",
+      "!node_modules/**/test/**/*",
+      "!node_modules/**/tests/**/*",
+      "!node_modules/**/example/**/*",
+      "!node_modules/**/examples/**/*"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/sharp/**/*"
     ],
     "mac": {
       "category": "public.app-category.productivity",
-      "icon": "assets/icon.icns"
+      "icon": "assets/icon.icns",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["x64", "arm64"]
+        }
+      ]
     },
     "win": {
       "target": [
         {
           "target": "nsis",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
+          "arch": ["x64", "ia32"]
         },
         {
           "target": "portable",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         }
       ],
       "icon": "assets/icon.ico",
@@ -78,11 +105,21 @@
     },
     "linux": {
       "target": [
-        "AppImage",
-        "deb"
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        },
+        {
+          "target": "deb",
+          "arch": ["x64"]
+        }
       ],
       "icon": "assets/icon.png",
-      "category": "Office"
+      "category": "Office",
+      "maintainer": "合果科技 <contact@hergo.com.cn>",
+      "vendor": "合果科技",
+      "synopsis": "多平台文章一键转发工具",
+      "description": "支持微信公众号、知乎、今日头条等15个平台的文章一键发布工具"
     },
     "nsis": {
       "oneClick": false,
@@ -92,7 +129,26 @@
       "installerHeaderIcon": "assets/icon.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "文章多平台发布助手"
+      "shortcutName": "文章多平台发布助手",
+      "include": "installer.nsh",
+      "license": "LICENSE"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     }
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
