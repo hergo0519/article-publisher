@@ -15,6 +15,15 @@ if (missingFiles.length === 0) {
   process.exit(0);
 }
 
+// 在 CI 环境中，如果图标缺失，直接报错而不是尝试生成
+// 因为生成图标需要 sharp 依赖，会增加 CI 复杂度
+if (process.env.CI) {
+  console.error('Error: Icon files are missing in CI environment.');
+  console.error(`Missing: ${missingFiles.join(', ')}`);
+  console.error('Please ensure all icon files are committed to the repository.');
+  process.exit(1);
+}
+
 console.log(`Missing icon files: ${missingFiles.join(', ')}`);
 console.log('Generating icons...');
 

@@ -1,4 +1,3 @@
-import sharp from 'sharp'
 import path from 'path'
 import fs from 'fs'
 
@@ -30,44 +29,16 @@ export class ImageProcessor {
   static readonly DEFAULT_SIZE: ImageSize = { width: 900, height: 500 }
 
   /**
-   * 处理封面图
+   * 处理封面图（简化版，直接返回原图路径）
    * @param imagePath 原始图片路径
    * @param platformType 平台类型
    * @returns 处理后的图片路径
    */
   async processCoverImage(imagePath: string, platformType?: string): Promise<string> {
-    // 获取目标尺寸
-    const targetSize = platformType 
-      ? ImageProcessor.PLATFORM_SIZES[platformType] || ImageProcessor.DEFAULT_SIZE
-      : ImageProcessor.DEFAULT_SIZE
-
-    // 生成输出路径
-    const ext = path.extname(imagePath)
-    const baseName = path.basename(imagePath, ext)
-    const outputDir = path.dirname(imagePath)
-    const outputPath = path.join(outputDir, `${baseName}_processed${ext}`)
-
-    try {
-      // 使用 sharp 处理图片
-      await sharp(imagePath)
-        .resize(targetSize.width, targetSize.height, {
-          fit: 'cover',        // 裁剪模式：保持比例，填充整个区域
-          position: 'center',  // 从中心裁剪
-        })
-        .jpeg({
-          quality: 85,         // JPEG 质量
-          progressive: true,   // 渐进式 JPEG
-        })
-        .toFile(outputPath)
-
-      console.log(`Image processed: ${imagePath} -> ${outputPath}`)
-      console.log(`Target size: ${targetSize.width}x${targetSize.height}`)
-
-      return outputPath
-    } catch (error) {
-      console.error('Image processing error:', error)
-      throw new Error('图片处理失败')
-    }
+    // 由于移除了 sharp 依赖，暂时直接返回原图
+    // 如需图片处理功能，可后续添加
+    console.log(`Image processing skipped (sharp removed): ${imagePath}`)
+    return imagePath
   }
 
   /**
@@ -83,20 +54,15 @@ export class ImageProcessor {
     const results: { [key: string]: string } = {}
 
     for (const platformType of platformTypes) {
-      try {
-        const processedPath = await this.processCoverImage(imagePath, platformType)
-        results[platformType] = processedPath
-      } catch (error) {
-        console.error(`Failed to process image for ${platformType}:`, error)
-        results[platformType] = imagePath  // 失败时返回原图
-      }
+      // 简化处理，直接返回原图
+      results[platformType] = imagePath
     }
 
     return results
   }
 
   /**
-   * 检查图片是否符合平台要求
+   * 检查图片是否符合平台要求（简化版）
    * @param imagePath 图片路径
    * @param platformType 平台类型
    * @returns 检查结果
@@ -108,9 +74,13 @@ export class ImageProcessor {
     requiredSize?: ImageSize
   }> {
     try {
-      const metadata = await sharp(imagePath).metadata()
-      const currentWidth = metadata.width || 0
-      const currentHeight = metadata.height || 0
+      // 检查文件是否存在
+      if (!fs.existsSync(imagePath)) {
+        return {
+          valid: false,
+          message: '图片文件不存在',
+        }
+      }
 
       // 检查文件大小（不能超过 2MB）
       const stats = fs.statSync(imagePath)
@@ -118,33 +88,15 @@ export class ImageProcessor {
         return {
           valid: false,
           message: '图片大小不能超过 2MB',
-          currentSize: { width: currentWidth, height: currentHeight },
         }
       }
 
-      // 检查尺寸
       const requiredSize = platformType 
         ? ImageProcessor.PLATFORM_SIZES[platformType]
         : null
 
-      if (requiredSize) {
-        // 如果图片尺寸与要求相差太大，提示需要裁剪
-        const widthDiff = Math.abs(currentWidth - requiredSize.width) / requiredSize.width
-        const heightDiff = Math.abs(currentHeight - requiredSize.height) / requiredSize.height
-
-        if (widthDiff > 0.2 || heightDiff > 0.2) {
-          return {
-            valid: true,  // 仍然有效，但建议裁剪
-            message: `建议裁剪为 ${requiredSize.width}x${requiredSize.height} 像素`,
-            currentSize: { width: currentWidth, height: currentHeight },
-            requiredSize,
-          }
-        }
-      }
-
       return {
         valid: true,
-        currentSize: { width: currentWidth, height: currentHeight },
         requiredSize: requiredSize || undefined,
       }
     } catch (error) {
@@ -160,16 +112,8 @@ export class ImageProcessor {
    * @param processedPaths 处理后的图片路径数组
    */
   cleanup(processedPaths: string[]): void {
-    for (const path of processedPaths) {
-      try {
-        if (fs.existsSync(path) && path.includes('_processed')) {
-          fs.unlinkSync(path)
-          console.log('Cleaned up:', path)
-        }
-      } catch (error) {
-        console.error('Failed to cleanup:', path, error)
-      }
-    }
+    // 简化处理，无需清理
+    console.log('Cleanup skipped (sharp removed)')
   }
 }
 
