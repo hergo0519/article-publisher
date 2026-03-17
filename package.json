@@ -20,7 +20,8 @@
     "dist:win": "npm run build && electron-builder --win",
     "dist:mac": "npm run build && electron-builder --mac",
     "dist:linux": "npm run build && electron-builder --linux",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "icons": "node create-ico.js && node create-icns.js"
   },
   "dependencies": {
     "axios": "^1.6.0",
@@ -77,7 +78,7 @@
     ],
     "mac": {
       "category": "public.app-category.productivity",
-      "icon": "assets/icon-512.png",
+      "icon": "assets/icon.icns",
       "target": [
         {
           "target": "dmg",
