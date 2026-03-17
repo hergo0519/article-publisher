@@ -36,7 +36,7 @@ async function createIcns() {
   const sizes = [16, 32, 48, 128, 256, 512, 1024];
   const entries = [];
   
-  const svgBuffer = fs.readFileSync(path.join(__dirname, 'assets', 'icon.svg'));
+  const svgBuffer = fs.readFileSync(path.join(__dirname, '..', 'assets', 'icon.svg'));
   
   for (const size of sizes) {
     const pngBuffer = await sharp(svgBuffer)
@@ -60,7 +60,7 @@ async function createIcns() {
     ...entries
   ]);
   
-  fs.writeFileSync(path.join(__dirname, 'assets', 'icon.icns'), icnsBuffer);
+  fs.writeFileSync(path.join(__dirname, '..', 'assets', 'icon.icns'), icnsBuffer);
   console.log('Created icon.icns successfully!');
 }
 

@@ -30,7 +30,7 @@ async function createIco() {
   const sizes = [16, 32, 48, 64, 128, 256];
   const pngBuffers = [];
   
-  const svgBuffer = fs.readFileSync(path.join(__dirname, 'assets', 'icon.svg'));
+  const svgBuffer = fs.readFileSync(path.join(__dirname, '..', 'assets', 'icon.svg'));
   
   for (const size of sizes) {
     const pngBuffer = await sharp(svgBuffer)
@@ -56,7 +56,7 @@ async function createIco() {
     ...pngBuffers.map(p => p.buffer)
   ]);
   
-  fs.writeFileSync(path.join(__dirname, 'assets', 'icon.ico'), icoBuffer);
+  fs.writeFileSync(path.join(__dirname, '..', 'assets', 'icon.ico'), icoBuffer);
   console.log('Created icon.ico');
 }
 
